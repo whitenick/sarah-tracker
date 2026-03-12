@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>✨ Sarah's Glow + Gain Plan</title>
+<style>
+  :root {
+    --rose: #d4626a;
+    --rose-light: #fdf0f1;
+    --rose-mid: #f0b3b8;
+    --gold: #c8880a;
+    --gold-light: #fdf4e3;
+    --amber: #e8a020;
+    --amber-light: #fef3dc;
+    --red: #d94f4f;
+    --red-light: #fdeaea;
+    --peach: #e87c5a;
+    --peach-light: #fef0ea;
+    --mauve: #9b6b8a;
+    --mauve-light: #f5edf3;
+    --text: #2e1a1e;
+    --text-muted: #8a6b70;
+    --border: #f0d5d8;
+    --card: #ffffff;
+    --bg: #fdf6f7;
+    --radius: 14px;
+    --shadow: 0 2px 12px rgba(180,80,100,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #c8506a 0%, #9b3555 100%);
+    color: white;
+    padding: 20px 16px 16px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(180,50,80,0.25);
+  }
+  .header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.3px; }
+  .header p { font-size: 0.8rem; opacity: 0.85; margin-top: 3px; }
+
+  /* Week selector */
+  .week-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 73px;
+    z-index: 99;
+  }
+  .week-nav button {
+    background: var(--rose-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    color: var(--rose);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .week-nav button:hover { background: var(--rose-mid); }
+  .week-nav .week-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* Tab bar */
+  .tabs {
+    display: flex;
+    background: white;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 117px;
+    z-index: 98;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 1;
+    min-width: 70px;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab.active {
+    color: var(--rose);
+    border-bottom-color: var(--rose);
+    background: var(--rose-light);
+  }
+  .tab .tab-icon { display: block; font-size: 1.1rem; margin-bottom: 2px; }
+
+  /* Main content */
+  .content { padding: 12px; }
+
+  /* Day card */
+  .day-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, #c8506a 0%, #a33858 100%);
+    color: white;
+    cursor: pointer;
+  }
+  .day-title { font-size: 1rem; font-weight: 700; }
+  .day-stats {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  .cal-badge {
+    background: rgba(255,255,255,0.2);
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+  .cal-badge.over { background: rgba(217,79,79,0.6); }
+  .cal-badge.under { background: rgba(255,255,255,0.15); }
+  .progress-ring {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  /* Meal items */
+  .meals-container { padding: 0; }
+  .meal-item {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 14px;
+    transition: background 0.15s;
+  }
+  .meal-item:last-child { border-bottom: none; }
+  .meal-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .meal-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    margin-top: 1px;
+    background: white;
+  }
+  .meal-check.eaten {
+    background: #c8506a;
+    border-color: #c8506a;
+    color: white;
+  }
+  .meal-check.subbed {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: white;
+  }
+  .meal-check.missed {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+  }
+  .meal-info { flex: 1; min-width: 0; }
+  .meal-type {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+  .meal-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .meal-cals {
+    font-size: 0.75rem;
+    color: var(--rose);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .meal-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+  }
+  .tag {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .tag.fats { background: #fef3dc; color: #a06010; }
+  .tag.protein { background: #fde8f0; color: #c0305a; }
+  .tag.hydrating { background: #e8f4fe; color: #2060b0; }
+  .tag.glow { background: #fef8e8; color: #b08010; }
+
+  .meal-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    padding-left: 34px;
+  }
+  .action-btn {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    color: var(--text-muted);
+  }
+  .action-btn:hover { background: var(--rose-light); color: var(--rose); border-color: var(--rose-mid); }
+  .action-btn.active-eaten { background: var(--rose-light); color: var(--rose); border-color: var(--rose); }
+  .action-btn.active-subbed { background: var(--amber-light); color: var(--amber); border-color: var(--amber); }
+  .action-btn.active-missed { background: var(--red-light); color: var(--red); border-color: var(--red); }
+
+  /* Substitution note under meal */
+  .sub-note-display {
+    display: none;
+    margin-top: 6px;
+    padding: 6px 10px;
+    background: var(--amber-light);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.78rem;
+    color: #7a5010;
+    margin-left: 34px;
+  }
+  .sub-note-display.show { display: block; }
+
+  /* Ingredients expand */
+  .ingredients {
+    display: none;
+    padding: 6px 14px 8px 48px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+  .ingredients.open { display: block; }
+  .ing-title { font-weight: 600; color: var(--text); margin-bottom: 2px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.4px; }
+
+  /* Notes section */
+  .notes-area {
+    padding: 10px 14px 14px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+  .notes-area textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    resize: none;
+    background: white;
+    color: var(--text);
+    min-height: 60px;
+    transition: border 0.2s;
+  }
+  .notes-area textarea:focus {
+    outline: none;
+    border-color: var(--rose);
+  }
+  .notes-area textarea::placeholder { color: #c8a0a8; }
+  .notes-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  /* Day summary pills */
+  .day-summary {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--rose-light);
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .day-summary::-webkit-scrollbar { display: none; }
+  .summary-pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid var(--border);
+  }
+
+  /* Progress page */
+  .progress-section { margin-bottom: 20px; }
+  .section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 14px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--rose);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .streak-fire { color: #e8600a; }
+
+  /* Weekly bar chart */
+  .week-chart {
+    background: white;
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .chart-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 80px;
+  }
+  .chart-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+    gap: 3px;
+  }
+  .chart-bar-wrap {
+    width: 100%;
+    background: var(--rose-light);
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    min-height: 4px;
+    height: 70px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+  }
+  .chart-bar-fill {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s ease;
+    background: linear-gradient(180deg, #d4626a 0%, #a33858 100%);
+  }
+  .chart-bar-fill.partial { background: linear-gradient(180deg, var(--amber) 0%, #c08018 100%); }
+  .chart-bar-fill.empty { background: var(--rose-light); }
+  .chart-day-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  /* Principles tracker */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .principle-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .principle-icon { font-size: 1.4rem; margin-bottom: 4px; }
+  .principle-name { font-size: 0.75rem; font-weight: 700; color: var(--text); }
+  .principle-count { font-size: 1.4rem; font-weight: 800; color: var(--rose); }
+  .principle-sub { font-size: 0.65rem; color: var(--text-muted); }
+  .principle-bar-wrap {
+    height: 5px;
+    background: var(--rose-light);
+    border-radius: 3px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .principle-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d4626a, #c8880a);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* Calendar grid */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    background: white;
+    border-radius: var(--radius);
+    padding: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .cal-day-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .cal-day-name {
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .cal-day-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: var(--rose-light);
+    color: var(--text-muted);
+    border: 2px solid var(--border);
+  }
+  .cal-day-dot.full { background: #c8506a; color: white; border-color: #c8506a; }
+  .cal-day-dot.partial { background: var(--amber-light); color: var(--amber); border-color: var(--amber); }
+  .cal-day-dot.missed { background: var(--red-light); color: var(--red); border-color: var(--red); }
+  .cal-day-dot.empty { background: var(--rose-light); color: var(--text-muted); border-color: var(--border); }
+
+  /* Notes list in progress */
+  .note-entry {
+    background: white;
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+    box-shadow: var(--shadow);
+  }
+  .note-day { font-size: 0.72rem; font-weight: 700; color: var(--rose); margin-bottom: 3px; }
+  .note-text { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+
+  /* Glow score card */
+  .glow-score {
+    background: linear-gradient(135deg, #c8506a 0%, #8b2d50 100%);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    color: white;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .glow-score-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .glow-score-label { font-size: 0.85rem; opacity: 0.85; }
+  .glow-score-sub { font-size: 0.75rem; opacity: 0.7; margin-top: 6px; }
+
+  /* Adherence badge */
+  .adherence-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .adherence-badge.excellent { background: rgba(255,255,255,0.2); }
+  .adherence-badge.good { background: rgba(232,160,32,0.3); }
+  .adherence-badge.fair { background: rgba(217,79,79,0.3); }
+
+  /* Calorie progress bar */
+  .cal-progress-bar {
+    height: 8px;
+    background: var(--rose-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .cal-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d4626a, #c8880a);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+  .cal-progress-fill.over { background: linear-gradient(90deg, var(--red), #c03030); }
+
+  /* Bottom nav */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    display: flex;
+    box-shadow: 0 -2px 12px rgba(180,80,100,0.1);
+    z-index: 200;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 4px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    font-weight: 600;
+    border-top: 3px solid transparent;
+  }
+  .nav-item.active {
+    color: var(--rose);
+    border-top-color: var(--rose);
+  }
+  .nav-icon { font-size: 1.3rem; margin-bottom: 2px; }
+
+  /* Modals / toasts */
+  .toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2e1a1e;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    z-index: 500;
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+
+  /* Sub-note modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 400;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 20px 16px;
+    width: 100%;
+    max-width: 500px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+  .modal textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    resize: none;
+    min-height: 80px;
+    color: var(--text);
+  }
+  .modal textarea:focus { outline: none; border-color: var(--rose); }
+  .modal-btns {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .modal-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .modal-btn.primary { background: #c8506a; color: white; }
+  .modal-btn.secondary { background: var(--rose-light); color: var(--rose); }
+
+  /* Allergy alert banner */
+  .allergy-banner {
+    background: linear-gradient(135deg, #fef0ea, #fdf4e3);
+    border: 1px solid #f0c8a0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 0.78rem;
+    color: #7a4010;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .allergy-banner-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .allergy-banner strong { display: block; margin-bottom: 2px; }
+
+  /* Responsive */
+  @media (min-width: 500px) {
+    .content { max-width: 500px; margin: 0 auto; }
+    .week-nav { justify-content: center; gap: 20px; }
+    .bottom-nav { max-width: 500px; left: 50%; transform: translateX(-50%); }
+    .toast { bottom: 90px; }
+  }
+
+  /* Animations */
+  @keyframes checkPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+  .pop { animation: checkPop 0.3s ease; }
+
+  .hidden { display: none !important; }
+  .page { display: none; }
+  .page.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>✨ Sarah's Glow + Gain Plan</h1>
+  <p>Weight Gain · Skin Glow · Nourish Daily</p>
+</div>
+
+<!-- Week navigation -->
+<div class="week-nav">
+  <button id="prevWeek">← Prev</button>
+  <span class="week-label" id="weekLabel">This Week</span>
+  <button id="nextWeek">Next →</button>
+</div>
+
+<!-- Tab bar (days) -->
+<div class="tabs" id="dayTabs"></div>
+
+<!-- Pages -->
+<div class="content">
+
+  <!-- Meal Plan Page -->
+  <div class="page active" id="pagePlan">
+    <div id="dayContent"></div>
+  </div>
+
+  <!-- Progress Page -->
+  <div class="page" id="pageProgress">
+    <div class="glow-score" id="glowScoreCard">
+      <div class="glow-score-number" id="glowScoreNum">--</div>
+      <div class="glow-score-label">✨ Weekly Glow Score</div>
+      <div class="adherence-badge excellent" id="adherenceBadge">Loading...</div>
+      <div class="glow-score-sub" id="glowScoreSub">Calculating...</div>
+    </div>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="week-chart">
+      <div class="chart-title">📊 Daily Adherence This Week</div>
+      <div class="chart-bars" id="weekChart"></div>
+    </div>
+
+    <div class="progress-section">
+      <div class="section-title">🌟 Glow Principles (This Week)</div>
+      <div class="principles-grid" id="principlesGrid"></div>
+    </div>
+
+    <div class="progress-section">
+      <div class="section-title">📅 Calendar Overview</div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+
+    <div class="progress-section">
+      <div class="section-title">📓 Daily Notes</div>
+      <div id="notesList"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item active" id="navPlan" onclick="showPage('plan')">
+    <span class="nav-icon">🌸</span>Plan
+  </div>
+  <div class="nav-item" id="navProgress" onclick="showPage('progress')">
+    <span class="nav-icon">📈</span>Progress
+  </div>
+</div>
+
+<!-- Sub modal -->
+<div class="modal-overlay" id="subModal">
+  <div class="modal">
+    <h3 id="subModalTitle">What did you eat instead? 🍽️</h3>
+    <textarea id="subModalInput" placeholder="Describe what you had..." rows="3"></textarea>
+    <div class="modal-btns">
+      <button class="modal-btn secondary" onclick="closeSubModal()">Cancel</button>
+      <button class="modal-btn primary" onclick="saveSubstitution()">Save ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// SARAH'S MEAL PLAN DATA
+// No milk · No nuts · High calorie · Glow + Gain
+// ============================================================
+const MEAL_PLAN = {
+  Monday: {
+    meals: [
+      {
+        type: 'Breakfast',
+        name: 'Avocado toast on sourdough + 2 poached eggs + smoked salmon',
+        calories: 580,
+        ingredients: ['sourdough bread (2 slices)', '1 ripe avocado', '2 eggs (poached)', '2 oz smoked salmon', 'lemon juice', 'red pepper flakes', 'sea salt'],
+        principles: ['fats', 'protein', 'glow']
+      },
+      {
+        type: 'Lunch',
+        name: 'Greek salad: chicken, cucumber, tomato, olives, feta, olive oil, lemon',
+        calories: 520,
+        ingredients: ['4 oz grilled chicken breast', '½ cucumber (sliced)', '1 cup cherry tomatoes', '¼ cup kalamata olives', '2 oz feta cheese', '2 tbsp olive oil', 'lemon juice', 'dried oregano'],
+        principles: ['protein', 'hydrating', 'fats']
+      },
+      {
+        type: 'Dinner',
+        name: 'Pan-seared salmon over quinoa + roasted sweet potato + tahini drizzle',
+        calories: 680,
+        ingredients: ['6 oz salmon fillet', '¾ cup cooked quinoa', '1 medium sweet potato', '2 tbsp tahini', 'lemon juice', 'olive oil', 'garlic', 'fresh herbs'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Snack',
+        name: 'Coconut yogurt parfait: coconut yogurt, nut-free granola, berries, honey, pumpkin seeds',
+        calories: 420,
+        ingredients: ['¾ cup coconut yogurt', '¼ cup nut-free granola', '½ cup mixed berries', '1 tbsp honey', '2 tbsp pumpkin seeds'],
+        principles: ['fats', 'hydrating', 'glow']
+      }
+    ],
+    target: 2200
+  },
+  Tuesday: {
+    meals: [
+      {
+        type: 'Breakfast',
+        name: 'Smoothie bowl: banana, mango, coconut milk, chia seeds, granola, coconut flakes, sunflower seed butter',
+        calories: 620,
+        ingredients: ['1 banana (frozen)', '½ cup mango chunks', '½ cup coconut milk', '1 tbsp chia seeds', '¼ cup nut-free granola', '2 tbsp coconut flakes', '1 tbsp sunflower seed butter'],
+        principles: ['fats', 'hydrating', 'glow']
+      },
+      {
+        type: 'Lunch',
+        name: 'Tuna poke bowl: tuna, brown rice, avocado, edamame, cucumber, sesame oil',
+        calories: 580,
+        ingredients: ['5 oz sushi-grade tuna', '¾ cup cooked brown rice', '½ avocado', '¼ cup edamame', '½ cucumber (diced)', '1 tbsp sesame oil', 'soy sauce', 'sesame seeds', 'scallions'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Dinner',
+        name: 'Grass-fed beef burger on brioche + sweet potato fries + side salad with olive oil',
+        calories: 720,
+        ingredients: ['6 oz grass-fed beef patty', '1 brioche bun', '1 medium sweet potato (fries)', 'mixed greens (2 cups)', '2 tbsp olive oil', 'tomato', 'onion', 'pickles', 'mustard'],
+        principles: ['protein', 'fats']
+      },
+      {
+        type: 'Snack',
+        name: 'Pumpkin seeds + dark chocolate + orange slices',
+        calories: 380,
+        ingredients: ['3 tbsp pumpkin seeds', '1 oz dark chocolate (70%+)', '1 orange (sliced)'],
+        principles: ['fats', 'hydrating', 'glow']
+      }
+    ],
+    target: 2300
+  },
+  Wednesday: {
+    meals: [
+      {
+        type: 'Breakfast',
+        name: 'Scrambled eggs with spinach & feta + whole grain toast with butter + fresh berries',
+        calories: 560,
+        ingredients: ['3 eggs (scrambled)', '2 cups fresh spinach', '1.5 oz feta cheese', '2 slices whole grain toast', '1 tbsp butter', '½ cup mixed berries', 'olive oil'],
+        principles: ['protein', 'hydrating', 'glow']
+      },
+      {
+        type: 'Lunch',
+        name: 'Mediterranean wrap: hummus, grilled chicken, cucumber, tomato, arugula, tzatziki',
+        calories: 540,
+        ingredients: ['1 whole wheat wrap', '3 tbsp hummus', '4 oz grilled chicken', '½ cucumber (sliced)', '½ cup cherry tomatoes', '1 cup arugula', '2 tbsp tzatziki'],
+        principles: ['protein', 'hydrating', 'fats']
+      },
+      {
+        type: 'Dinner',
+        name: 'Baked cod with lemon-herb butter + roasted Brussels sprouts + wild rice',
+        calories: 660,
+        ingredients: ['6 oz cod fillet', '2 tbsp butter', 'lemon juice', 'fresh herbs (parsley, thyme)', '2 cups Brussels sprouts', '¾ cup cooked wild rice', 'olive oil', 'garlic'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Snack',
+        name: 'Rice cakes with sunflower seed butter + sliced banana + honey drizzle',
+        calories: 400,
+        ingredients: ['2 rice cakes', '2 tbsp sunflower seed butter', '1 banana (sliced)', '1 tbsp honey'],
+        principles: ['fats', 'hydrating']
+      }
+    ],
+    target: 2160
+  },
+  Thursday: {
+    meals: [
+      {
+        type: 'Breakfast',
+        name: 'Oatmeal: rolled oats, oat milk, banana, sunflower seed butter, chia seeds, cinnamon',
+        calories: 580,
+        ingredients: ['1 cup rolled oats', '1 cup oat milk', '1 banana (sliced)', '2 tbsp sunflower seed butter', '1 tbsp chia seeds', '½ tsp cinnamon', '1 tbsp maple syrup'],
+        principles: ['fats', 'hydrating', 'glow']
+      },
+      {
+        type: 'Lunch',
+        name: 'Cobb salad: grilled chicken, hard-boiled egg, avocado, bacon, blue cheese, olive oil vinaigrette',
+        calories: 620,
+        ingredients: ['4 oz grilled chicken', '2 hard-boiled eggs', '½ avocado', '2 strips bacon (crumbled)', '1.5 oz blue cheese', '3 cups romaine lettuce', '2 tbsp olive oil vinaigrette', 'cherry tomatoes'],
+        principles: ['protein', 'fats']
+      },
+      {
+        type: 'Dinner',
+        name: 'Grilled lamb chops + roasted root vegetables (carrots, beets, parsnips) with olive oil + couscous',
+        calories: 700,
+        ingredients: ['2 lamb chops (6 oz)', '1 carrot', '1 medium beet', '1 parsnip', '2 tbsp olive oil', '¾ cup cooked couscous', 'rosemary', 'garlic', 'salt & pepper'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Snack',
+        name: 'Apple slices with 3 tbsp sunflower seed butter + sprinkle of cinnamon',
+        calories: 380,
+        ingredients: ['1 large apple (sliced)', '3 tbsp sunflower seed butter', '¼ tsp cinnamon'],
+        principles: ['fats', 'hydrating']
+      }
+    ],
+    target: 2280
+  },
+  Friday: {
+    meals: [
+      {
+        type: 'Breakfast',
+        name: 'Smoked salmon bagel: whole grain bagel, dairy-free cream cheese, capers, red onion, cucumber',
+        calories: 600,
+        ingredients: ['1 whole grain bagel', '2 tbsp dairy-free cream cheese', '3 oz smoked salmon', '1 tbsp capers', '¼ red onion (thinly sliced)', '½ cucumber (sliced)', 'fresh dill', 'lemon'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Lunch',
+        name: 'Quinoa Buddha bowl: roasted chickpeas, avocado, sweet potato, kale, tahini dressing',
+        calories: 580,
+        ingredients: ['¾ cup cooked quinoa', '½ cup roasted chickpeas', '½ avocado', '½ sweet potato (roasted)', '2 cups kale (massaged)', '2 tbsp tahini dressing', 'lemon juice', 'olive oil'],
+        principles: ['fats', 'protein', 'glow']
+      },
+      {
+        type: 'Dinner',
+        name: 'Pan-seared scallops over creamy polenta (oat milk) + sautéed spinach with garlic',
+        calories: 680,
+        ingredients: ['6 oz sea scallops', '¾ cup polenta', '1 cup oat milk', '2 cups spinach', '3 garlic cloves', '2 tbsp butter', 'olive oil', 'white wine', 'lemon', 'fresh thyme'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Snack',
+        name: 'Trail mix: pumpkin seeds, sunflower seeds, dried mango, dark chocolate chips, coconut flakes',
+        calories: 420,
+        ingredients: ['2 tbsp pumpkin seeds', '2 tbsp sunflower seeds', '3 tbsp dried mango pieces', '1 tbsp dark chocolate chips', '2 tbsp coconut flakes'],
+        principles: ['fats', 'glow']
+      }
+    ],
+    target: 2280
+  },
+  Saturday: {
+    meals: [
+      {
+        type: 'Breakfast',
+        name: 'Breakfast burrito: scrambled eggs, black beans, avocado, cheese, salsa in whole wheat tortilla',
+        calories: 640,
+        ingredients: ['1 large whole wheat tortilla', '3 eggs (scrambled)', '¼ cup black beans', '½ avocado', '1.5 oz cheddar cheese', '2 tbsp salsa', 'olive oil', 'cumin', 'cilantro'],
+        principles: ['protein', 'fats']
+      },
+      {
+        type: 'Lunch',
+        name: 'Caprese salad: fresh mozzarella, tomatoes, basil, balsamic, olive oil + crusty bread',
+        calories: 560,
+        ingredients: ['4 oz fresh mozzarella', '2 large tomatoes (sliced)', 'fresh basil (large handful)', '2 tbsp olive oil', '1 tbsp balsamic glaze', '2 slices crusty sourdough', 'flaky sea salt'],
+        principles: ['fats', 'hydrating', 'glow']
+      },
+      {
+        type: 'Dinner',
+        name: 'Roasted chicken thighs with crispy skin + mashed sweet potatoes with butter + roasted broccoli',
+        calories: 720,
+        ingredients: ['2 bone-in chicken thighs (skin-on)', '2 medium sweet potatoes', '2 tbsp butter', '2 cups broccoli florets', 'olive oil', 'garlic', 'rosemary', 'thyme', 'salt & pepper'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Snack',
+        name: 'Chia pudding: chia seeds, coconut milk, mango, toasted pumpkin seeds',
+        calories: 380,
+        ingredients: ['3 tbsp chia seeds', '1 cup coconut milk', '½ cup mango (diced)', '2 tbsp toasted pumpkin seeds', '1 tsp vanilla extract', '1 tsp maple syrup'],
+        principles: ['fats', 'hydrating', 'glow']
+      }
+    ],
+    target: 2300
+  },
+  Sunday: {
+    meals: [
+      {
+        type: 'Breakfast',
+        name: 'French toast: brioche, eggs, cinnamon, topped with coconut yogurt, berries, maple syrup, pumpkin seeds',
+        calories: 620,
+        ingredients: ['2 slices brioche', '2 eggs', '¼ cup oat milk', '½ tsp cinnamon', '¼ cup coconut yogurt', '½ cup mixed berries', '2 tbsp maple syrup', '2 tbsp pumpkin seeds', 'butter for pan'],
+        principles: ['protein', 'fats', 'hydrating']
+      },
+      {
+        type: 'Lunch',
+        name: 'Nicoise salad: seared tuna, green beans, boiled egg, olives, tomatoes, new potatoes, olive oil',
+        calories: 600,
+        ingredients: ['5 oz seared tuna steak', '1 cup green beans (blanched)', '2 hard-boiled eggs', '¼ cup niçoise olives', 'cherry tomatoes (½ cup)', '6 new potatoes (boiled)', '3 tbsp olive oil', 'Dijon mustard', 'lemon juice'],
+        principles: ['protein', 'fats', 'hydrating', 'glow']
+      },
+      {
+        type: 'Dinner',
+        name: 'Grass-fed steak + loaded baked potato (butter, dairy-free sour cream, chives) + asparagus with lemon butter',
+        calories: 740,
+        ingredients: ['6 oz grass-fed ribeye or strip steak', '1 large russet potato (baked)', '2 tbsp butter', '2 tbsp dairy-free sour cream', 'fresh chives', '1 bunch asparagus', '1 tbsp lemon butter', 'salt & pepper', 'garlic'],
+        principles: ['protein', 'fats', 'glow']
+      },
+      {
+        type: 'Snack',
+        name: 'Smoothie: banana, spinach, sunflower seed butter, dairy-free protein powder, oat milk, honey',
+        calories: 400,
+        ingredients: ['1 banana', '2 cups spinach', '2 tbsp sunflower seed butter', '1 scoop dairy-free protein powder', '1 cup oat milk', '1 tbsp honey', 'ice cubes'],
+        principles: ['protein', 'fats', 'hydrating', 'glow']
+      }
+    ],
+    target: 2360
+  }
+};
+
+const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const DAY_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MEAL_ICONS = { Breakfast: '🌸', Lunch: '☀️', Dinner: '🌙', Snack: '✨' };
+const PRINCIPLE_INFO = {
+  fats:      { label: 'Healthy Fats', icon: '🥑', desc: 'avocado, seeds, olive oil, fatty fish', target: 20 },
+  protein:   { label: 'Protein', icon: '💪', desc: 'eggs, fish, chicken, beef, legumes', target: 20 },
+  hydrating: { label: 'Hydrating', icon: '🌊', desc: 'cucumber, citrus, greens, melons', target: 16 },
+  glow:      { label: 'Skin Glow', icon: '✨', desc: 'omega-3s, vitamin C, vitamin E, collagen', target: 20 }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeekOffset = 0;
+let currentDayIndex = 0;
+let currentPage = 'plan';
+let pendingSubstitution = null;
+
+function getWeekStartDate(offset = 0) {
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1) + (offset * 7));
+  monday.setHours(0,0,0,0);
+  return monday;
+}
+
+function getWeekKey(offset = 0) {
+  const d = getWeekStartDate(offset);
+  return `sarah_week_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
+}
+
+function formatWeekLabel(offset) {
+  if (offset === 0) return 'This Week';
+  if (offset === -1) return 'Last Week';
+  if (offset === 1) return 'Next Week';
+  const d = getWeekStartDate(offset);
+  const end = new Date(d); end.setDate(d.getDate() + 6);
+  const fmt = (dt) => dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return `${fmt(d)} – ${fmt(end)}`;
+}
+
+// ============================================================
+// STORAGE
+// ============================================================
+function getWeekData(offset = currentWeekOffset) {
+  const key = getWeekKey(offset);
+  const raw = localStorage.getItem(key);
+  return raw ? JSON.parse(raw) : {};
+}
+
+function saveWeekData(data, offset = currentWeekOffset) {
+  localStorage.setItem(getWeekKey(offset), JSON.stringify(data));
+}
+
+function getMealState(day, mealIndex) {
+  const data = getWeekData();
+  return (data[day] && data[day].meals && data[day].meals[mealIndex]) || { status: null, subNote: '' };
+}
+
+function setMealState(day, mealIndex, status, subNote) {
+  const data = getWeekData();
+  if (!data[day]) data[day] = { meals: {}, note: '' };
+  if (!data[day].meals) data[day].meals = {};
+  data[day].meals[mealIndex] = { status, subNote: subNote || '' };
+  saveWeekData(data);
+}
+
+function getDayNote(day) {
+  const data = getWeekData();
+  return (data[day] && data[day].note) || '';
+}
+
+function setDayNote(day, note) {
+  const data = getWeekData();
+  if (!data[day]) data[day] = { meals: {}, note: '' };
+  data[day].note = note;
+  saveWeekData(data);
+}
+
+// ============================================================
+// RENDER: DAY TABS
+// ============================================================
+function renderDayTabs() {
+  const tabs = document.getElementById('dayTabs');
+  tabs.innerHTML = '';
+  DAYS.forEach((day, i) => {
+    const data = getWeekData();
+    const dayData = data[day] || {};
+    const meals = MEAL_PLAN[day].meals;
+    const mealStates = dayData.meals || {};
+    const eatenCount = Object.values(mealStates).filter(m => m.status === 'eaten').length;
+    const pct = Math.round((eatenCount / meals.length) * 100);
+
+    let dotColor = '';
+    if (eatenCount === meals.length) dotColor = '🟢';
+    else if (eatenCount > 0) dotColor = '🟡';
+
+    const tab = document.createElement('div');
+    tab.className = `tab${i === currentDayIndex ? ' active' : ''}`;
+    tab.innerHTML = `<span class="tab-icon">${dotColor || DAY_SHORT[i][0]}</span>${DAY_SHORT[i]}`;
+    tab.onclick = () => { currentDayIndex = i; renderDay(); renderDayTabs(); };
+    tabs.appendChild(tab);
+  });
+}
+
+// ============================================================
+// RENDER: DAY CONTENT
+// ============================================================
+function renderDay() {
+  const day = DAYS[currentDayIndex];
+  const plan = MEAL_PLAN[day];
+  const data = getWeekData();
+  const dayData = data[day] || {};
+  const mealStates = dayData.meals || {};
+
+  let eatenCals = 0;
+  let eatenCount = 0;
+  let subbedCount = 0;
+  let missedCount = 0;
+
+  plan.meals.forEach((m, i) => {
+    const st = mealStates[i] || {};
+    if (st.status === 'eaten') { eatenCals += m.calories; eatenCount++; }
+    else if (st.status === 'subbed') { eatenCals += m.calories; subbedCount++; }
+    else if (st.status === 'missed') { missedCount++; }
+  });
+
+  const calPct = Math.round((eatenCals / plan.target) * 100);
+
+  let mealsHTML = '';
+  plan.meals.forEach((meal, i) => {
+    const st = mealStates[i] || {};
+    const status = st.status || null;
+    const subNote = st.subNote || '';
+
+    const checkClass = status === 'eaten' ? 'eaten' : status === 'subbed' ? 'subbed' : status === 'missed' ? 'missed' : '';
+    const checkIcon = status === 'eaten' ? '✓' : status === 'subbed' ? '~' : status === 'missed' ? '✗' : '';
+
+    const tagsHTML = meal.principles.map(p => {
+      const pi = PRINCIPLE_INFO[p];
+      return `<span class="tag ${p}">${pi.icon} ${pi.label}</span>`;
+    }).join('');
+
+    const ingsHTML = meal.ingredients.map(ing => `• ${ing}`).join('<br>');
+
+    const subNoteHTML = subNote ? `<div class="sub-note-display show">🔄 Had instead: ${subNote}</div>` : `<div class="sub-note-display"></div>`;
+
+    mealsHTML += `
+      <div class="meal-item" id="meal-${i}">
+        <div class="meal-row">
+          <div class="meal-check ${checkClass}" onclick="toggleCheck('${day}',${i})" id="check-${i}">${checkIcon}</div>
+          <div class="meal-info">
+            <div class="meal-type">${MEAL_ICONS[meal.type]} ${meal.type}</div>
+            <div class="meal-name">${meal.name}</div>
+            <div class="meal-cals">~${meal.calories} cal</div>
+            <div class="meal-tags">${tagsHTML}</div>
+          </div>
+        </div>
+        <div class="meal-actions">
+          <button class="action-btn${status === 'eaten' ? ' active-eaten' : ''}" onclick="setStatus('${day}',${i},'eaten')">✓ Ate it</button>
+          <button class="action-btn${status === 'subbed' ? ' active-subbed' : ''}" onclick="setStatus('${day}',${i},'subbed')">~ Swapped</button>
+          <button class="action-btn${status === 'missed' ? ' active-missed' : ''}" onclick="setStatus('${day}',${i},'missed')">✗ Skipped</button>
+          <button class="action-btn" onclick="toggleIngredients(${i})">📋 Ingredients</button>
+        </div>
+        ${subNoteHTML}
+        <div class="ingredients" id="ing-${i}">
+          <div class="ing-title">Ingredients</div>
+          ${ingsHTML}
+        </div>
+      </div>
+    `;
+  });
+
+  // Summary pills
+  const principleCount = {};
+  plan.meals.forEach((meal, i) => {
+    const st = mealStates[i] || {};
+    if (st.status === 'eaten' || st.status === 'subbed') {
+      meal.principles.forEach(p => { principleCount[p] = (principleCount[p] || 0) + 1; });
+    }
+  });
+  const pillsHTML = Object.entries(PRINCIPLE_INFO).map(([k, v]) => {
+    const c = principleCount[k] || 0;
+    return `<div class="summary-pill">${v.icon} ${v.label}: ${c}/${plan.meals.filter(m => m.principles.includes(k)).length}</div>`;
+  }).join('');
+
+  // Calorie progress bar
+  const calBarPct = Math.min(calPct, 100);
+  const calBarClass = calPct > 100 ? 'over' : '';
+  const calBarHTML = `
+    <div style="padding: 10px 14px 0;">
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);font-weight:600;">
+        <span>Calories eaten: <strong style="color:var(--rose)">${eatenCals}</strong></span>
+        <span>Target: <strong>${plan.target}</strong></span>
+      </div>
+      <div class="cal-progress-bar"><div class="cal-progress-fill ${calBarClass}" style="width:${calBarPct}%"></div></div>
+    </div>
+  `;
+
+  const note = getDayNote(day);
+
+  document.getElementById('dayContent').innerHTML = `
+    <div class="allergy-banner">
+      <span class="allergy-banner-icon">⚠️</span>
+      <div><strong>Allergy Safe ✓</strong> No milk · No nuts (pumpkin seeds, sunflower seeds OK · feta & mozzarella OK)</div>
+    </div>
+    <div class="day-card">
+      <div class="day-header">
+        <div>
+          <div class="day-title">${day}</div>
+          <div style="font-size:0.75rem;opacity:0.85;margin-top:2px;">Target: ~${plan.target.toLocaleString()} cal</div>
+        </div>
+        <div class="day-stats">
+          <span class="cal-badge${calPct > 100 ? ' over' : calPct < 50 ? ' under' : ''}">${eatenCals} / ${plan.target}</span>
+          <svg class="progress-ring" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3"/>
+            <circle cx="18" cy="18" r="15" fill="none" stroke="white" stroke-width="3"
+              stroke-dasharray="${Math.min(calBarPct, 100) * 0.943}, 100" stroke-linecap="round"
+              transform="rotate(-90 18 18)"/>
+          </svg>
+        </div>
+      </div>
+      ${calBarHTML}
+      <div class="meals-container">${mealsHTML}</div>
+      <div class="day-summary">${pillsHTML}</div>
+      <div class="notes-area">
+        <div class="notes-label">📝 How do you feel today? (energy, skin, mood)</div>
+        <textarea placeholder="e.g. Energy levels great today! Skin feeling hydrated. Ate everything on plan 🌟" rows="3" onchange="saveNote('${day}', this.value)">${note}</textarea>
+      </div>
+    </div>
+  `;
+}
+
+function saveNote(day, note) {
+  setDayNote(day, note);
+}
+
+function toggleIngredients(index) {
+  const el = document.getElementById(`ing-${index}`);
+  el.classList.toggle('open');
+}
+
+// ============================================================
+// MEAL STATUS
+// ============================================================
+function toggleCheck(day, mealIndex) {
+  const current = getMealState(day, mealIndex);
+  const next = current.status === 'eaten' ? null : 'eaten';
+  setMealState(day, mealIndex, next, current.subNote);
+  renderDay();
+  renderDayTabs();
+  if (next === 'eaten') showToast('✨ Meal logged! Glowing!');
+}
+
+function setStatus(day, mealIndex, status) {
+  const current = getMealState(day, mealIndex);
+  if (current.status === status) {
+    setMealState(day, mealIndex, null, '');
+    renderDay();
+    renderDayTabs();
+    return;
+  }
+  if (status === 'subbed') {
+    pendingSubstitution = { day, mealIndex };
+    const meal = MEAL_PLAN[day].meals[mealIndex];
+    document.getElementById('subModalTitle').textContent = `Swapped out: ${meal.type}`;
+    document.getElementById('subModalInput').value = current.subNote || '';
+    document.getElementById('subModal').classList.add('open');
+    return;
+  }
+  setMealState(day, mealIndex, status, status === 'missed' ? '' : current.subNote);
+  renderDay();
+  renderDayTabs();
+  if (status === 'eaten') showToast('✨ Ate it! Great job!');
+  if (status === 'missed') showToast('No worries — tomorrow is fresh 🌸');
+}
+
+function closeSubModal() {
+  document.getElementById('subModal').classList.remove('open');
+  pendingSubstitution = null;
+}
+
+function saveSubstitution() {
+  if (!pendingSubstitution) return;
+  const { day, mealIndex } = pendingSubstitution;
+  const note = document.getElementById('subModalInput').value.trim();
+  setMealState(day, mealIndex, 'subbed', note);
+  closeSubModal();
+  renderDay();
+  renderDayTabs();
+  showToast('🔄 Substitution saved!');
+}
+
+// ============================================================
+// RENDER: PROGRESS PAGE
+// ============================================================
+function renderProgress() {
+  const data = getWeekData();
+  let totalMeals = 0, eatenMeals = 0, subbedMeals = 0, missedMeals = 0;
+  let totalCals = 0, targetCals = 0;
+  let streakDays = 0;
+  const principleCount = { fats: 0, protein: 0, hydrating: 0, glow: 0 };
+
+  DAYS.forEach(day => {
+    const plan = MEAL_PLAN[day];
+    const dayData = data[day] || {};
+    const mealStates = dayData.meals || {};
+    targetCals += plan.target;
+
+    let dayEaten = 0;
+    plan.meals.forEach((meal, i) => {
+      totalMeals++;
+      const st = mealStates[i] || {};
+      if (st.status === 'eaten') {
+        eatenMeals++;
+        dayEaten++;
+        totalCals += meal.calories;
+        meal.principles.forEach(p => { principleCount[p]++; });
+      } else if (st.status === 'subbed') {
+        subbedMeals++;
+        dayEaten++;
+        totalCals += meal.calories;
+        meal.principles.forEach(p => { principleCount[p]++; });
+      } else if (st.status === 'missed') {
+        missedMeals++;
+      }
+    });
+    if (dayEaten === plan.meals.length) streakDays++;
+  });
+
+  const adherencePct = totalMeals > 0 ? Math.round(((eatenMeals + subbedMeals) / totalMeals) * 100) : 0;
+  const glowScore = adherencePct;
+
+  // Glow score card
+  const scoreEl = document.getElementById('glowScoreNum');
+  scoreEl.textContent = `${glowScore}%`;
+  const subEl = document.getElementById('glowScoreSub');
+  subEl.textContent = `${eatenMeals + subbedMeals} of ${totalMeals} meals logged this week`;
+
+  const badgeEl = document.getElementById('adherenceBadge');
+  if (glowScore >= 85) {
+    badgeEl.textContent = '✨ Glowing! Excellent adherence';
+    badgeEl.className = 'adherence-badge excellent';
+  } else if (glowScore >= 60) {
+    badgeEl.textContent = '🌸 Good progress, keep going!';
+    badgeEl.className = 'adherence-badge good';
+  } else {
+    badgeEl.textContent = '💪 Every meal counts — let\'s build momentum!';
+    badgeEl.className = 'adherence-badge fair';
+  }
+
+  // Stats
+  document.getElementById('statGrid').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-number">${eatenMeals}</div>
+      <div class="stat-label">Meals Eaten ✓</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">${subbedMeals}</div>
+      <div class="stat-label">Substitutions ~</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">${totalCals.toLocaleString()}</div>
+      <div class="stat-label">Calories Logged</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number streak-fire">${streakDays}</div>
+      <div class="stat-label">🔥 Full Days</div>
+    </div>
+  `;
+
+  // Bar chart
+  const chartBars = DAYS.map(day => {
+    const plan = MEAL_PLAN[day];
+    const dayData = data[day] || {};
+    const mealStates = dayData.meals || {};
+    const total = plan.meals.length;
+    const done = Object.values(mealStates).filter(m => m.status === 'eaten' || m.status === 'subbed').length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    let fillClass = done === total && done > 0 ? '' : done > 0 ? 'partial' : 'empty';
+    const shortDay = DAY_SHORT[DAYS.indexOf(day)];
+    return `
+      <div class="chart-col">
+        <div class="chart-bar-wrap">
+          <div class="chart-bar-fill ${fillClass}" style="height:${pct}%"></div>
+        </div>
+        <div class="chart-day-label">${shortDay}</div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('weekChart').innerHTML = chartBars;
+
+  // Principles
+  document.getElementById('principlesGrid').innerHTML = Object.entries(PRINCIPLE_INFO).map(([k, v]) => {
+    const c = principleCount[k];
+    const pct = Math.round((c / v.target) * 100);
+    return `
+      <div class="principle-card">
+        <div class="principle-icon">${v.icon}</div>
+        <div class="principle-name">${v.label}</div>
+        <div class="principle-count">${c}</div>
+        <div class="principle-sub">${v.desc}</div>
+        <div class="principle-bar-wrap">
+          <div class="principle-bar-fill" style="width:${Math.min(pct, 100)}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Calendar dots
+  document.getElementById('calendarGrid').innerHTML = DAYS.map((day, i) => {
+    const plan = MEAL_PLAN[day];
+    const dayData = data[day] || {};
+    const mealStates = dayData.meals || {};
+    const total = plan.meals.length;
+    const done = Object.values(mealStates).filter(m => m.status === 'eaten' || m.status === 'subbed').length;
+    const missed = Object.values(mealStates).filter(m => m.status === 'missed').length;
+    let dotClass = 'empty';
+    if (done === total && total > 0) dotClass = 'full';
+    else if (done > 0) dotClass = 'partial';
+    else if (missed > 0) dotClass = 'missed';
+    return `
+      <div class="cal-day-cell">
+        <div class="cal-day-name">${DAY_SHORT[i]}</div>
+        <div class="cal-day-dot ${dotClass}">${done}/${total}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Notes
+  const notesHTML = DAYS.map(day => {
+    const note = getDayNote(day);
+    return note ? `<div class="note-entry"><div class="note-day">${day}</div><div class="note-text">${note}</div></div>` : '';
+  }).join('');
+  document.getElementById('notesList').innerHTML = notesHTML || '<div style="color:var(--text-muted);font-size:0.85rem;text-align:center;padding:20px;">No notes yet — add how you\'re feeling on each day! 🌸</div>';
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showPage(page) {
+  currentPage = page;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  if (page === 'plan') {
+    document.getElementById('pagePlan').classList.add('active');
+    document.getElementById('navPlan').classList.add('active');
+    renderDay();
+  } else {
+    document.getElementById('pageProgress').classList.add('active');
+    document.getElementById('navProgress').classList.add('active');
+    renderProgress();
+  }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ============================================================
+// WEEK NAVIGATION
+// ============================================================
+document.getElementById('prevWeek').onclick = () => {
+  currentWeekOffset--;
+  document.getElementById('weekLabel').textContent = formatWeekLabel(currentWeekOffset);
+  renderDayTabs();
+  if (currentPage === 'plan') renderDay();
+  else renderProgress();
+};
+
+document.getElementById('nextWeek').onclick = () => {
+  currentWeekOffset++;
+  document.getElementById('weekLabel').textContent = formatWeekLabel(currentWeekOffset);
+  renderDayTabs();
+  if (currentPage === 'plan') renderDay();
+  else renderProgress();
+};
+
+// Close modal on overlay click
+document.getElementById('subModal').addEventListener('click', function(e) {
+  if (e.target === this) closeSubModal();
+});
+
+// ============================================================
+// INIT
+// ============================================================
+(function init() {
+  // Default to current day of week
+  const today = new Date().getDay();
+  currentDayIndex = today === 0 ? 6 : today - 1; // Mon=0
+  document.getElementById('weekLabel').textContent = formatWeekLabel(0);
+  renderDayTabs();
+  renderDay();
+})();
+</script>
+</body>
+</html>
