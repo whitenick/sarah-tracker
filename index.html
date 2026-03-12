@@ -805,24 +805,33 @@
 // ============================================================
 // SARAH'S MEAL PLAN DATA
 // No milk · No nuts · High calorie · Glow + Gain
+// Breakfast & Lunch: SAME every day (easy batch prep)
+// Dinner & Snack: DIFFERENT each day (variety at night)
 // ============================================================
+
+// Shared breakfast — same every day
+const BREAKFAST = {
+  type: 'Breakfast',
+  name: 'Oatmeal: rolled oats, oat milk, banana, sunflower seed butter, chia seeds, cinnamon',
+  calories: 580,
+  ingredients: ['1 cup rolled oats', '1 cup oat milk', '1 banana (sliced)', '2 tbsp sunflower seed butter', '1 tbsp chia seeds', '½ tsp cinnamon', '1 tbsp maple syrup (optional)'],
+  principles: ['fats', 'hydrating', 'glow']
+};
+
+// Shared lunch — same every day (batch prep Sunday)
+const LUNCH = {
+  type: 'Lunch',
+  name: 'Cobb salad: grilled chicken, hard-boiled egg, avocado, bacon, blue cheese, olive oil vinaigrette',
+  calories: 620,
+  ingredients: ['4 oz grilled chicken', '2 hard-boiled eggs', '½ avocado', '2 strips bacon (crumbled)', '1.5 oz blue cheese', '3 cups romaine lettuce', '2 tbsp olive oil vinaigrette', 'cherry tomatoes'],
+  principles: ['protein', 'fats']
+};
+
 const MEAL_PLAN = {
   Monday: {
     meals: [
-      {
-        type: 'Breakfast',
-        name: 'Avocado toast on sourdough + 2 poached eggs + smoked salmon',
-        calories: 580,
-        ingredients: ['sourdough bread (2 slices)', '1 ripe avocado', '2 eggs (poached)', '2 oz smoked salmon', 'lemon juice', 'red pepper flakes', 'sea salt'],
-        principles: ['fats', 'protein', 'glow']
-      },
-      {
-        type: 'Lunch',
-        name: 'Greek salad: chicken, cucumber, tomato, olives, feta, olive oil, lemon',
-        calories: 520,
-        ingredients: ['4 oz grilled chicken breast', '½ cucumber (sliced)', '1 cup cherry tomatoes', '¼ cup kalamata olives', '2 oz feta cheese', '2 tbsp olive oil', 'lemon juice', 'dried oregano'],
-        principles: ['protein', 'hydrating', 'fats']
-      },
+      BREAKFAST,
+      LUNCH,
       {
         type: 'Dinner',
         name: 'Pan-seared salmon over quinoa + roasted sweet potato + tahini drizzle',
@@ -832,30 +841,18 @@ const MEAL_PLAN = {
       },
       {
         type: 'Snack',
-        name: 'Coconut yogurt parfait: coconut yogurt, nut-free granola, berries, honey, pumpkin seeds',
+        name: 'Coconut yogurt parfait: coconut yogurt, granola (nut-free), berries, honey, pumpkin seeds',
         calories: 420,
         ingredients: ['¾ cup coconut yogurt', '¼ cup nut-free granola', '½ cup mixed berries', '1 tbsp honey', '2 tbsp pumpkin seeds'],
         principles: ['fats', 'hydrating', 'glow']
       }
     ],
-    target: 2200
+    target: 2300
   },
   Tuesday: {
     meals: [
-      {
-        type: 'Breakfast',
-        name: 'Smoothie bowl: banana, mango, coconut milk, chia seeds, granola, coconut flakes, sunflower seed butter',
-        calories: 620,
-        ingredients: ['1 banana (frozen)', '½ cup mango chunks', '½ cup coconut milk', '1 tbsp chia seeds', '¼ cup nut-free granola', '2 tbsp coconut flakes', '1 tbsp sunflower seed butter'],
-        principles: ['fats', 'hydrating', 'glow']
-      },
-      {
-        type: 'Lunch',
-        name: 'Tuna poke bowl: tuna, brown rice, avocado, edamame, cucumber, sesame oil',
-        calories: 580,
-        ingredients: ['5 oz sushi-grade tuna', '¾ cup cooked brown rice', '½ avocado', '¼ cup edamame', '½ cucumber (diced)', '1 tbsp sesame oil', 'soy sauce', 'sesame seeds', 'scallions'],
-        principles: ['protein', 'fats', 'glow']
-      },
+      BREAKFAST,
+      LUNCH,
       {
         type: 'Dinner',
         name: 'Grass-fed beef burger on brioche + sweet potato fries + side salad with olive oil',
@@ -875,20 +872,8 @@ const MEAL_PLAN = {
   },
   Wednesday: {
     meals: [
-      {
-        type: 'Breakfast',
-        name: 'Scrambled eggs with spinach & feta + whole grain toast with butter + fresh berries',
-        calories: 560,
-        ingredients: ['3 eggs (scrambled)', '2 cups fresh spinach', '1.5 oz feta cheese', '2 slices whole grain toast', '1 tbsp butter', '½ cup mixed berries', 'olive oil'],
-        principles: ['protein', 'hydrating', 'glow']
-      },
-      {
-        type: 'Lunch',
-        name: 'Mediterranean wrap: hummus, grilled chicken, cucumber, tomato, arugula, tzatziki',
-        calories: 540,
-        ingredients: ['1 whole wheat wrap', '3 tbsp hummus', '4 oz grilled chicken', '½ cucumber (sliced)', '½ cup cherry tomatoes', '1 cup arugula', '2 tbsp tzatziki'],
-        principles: ['protein', 'hydrating', 'fats']
-      },
+      BREAKFAST,
+      LUNCH,
       {
         type: 'Dinner',
         name: 'Baked cod with lemon-herb butter + roasted Brussels sprouts + wild rice',
@@ -904,24 +889,12 @@ const MEAL_PLAN = {
         principles: ['fats', 'hydrating']
       }
     ],
-    target: 2160
+    target: 2260
   },
   Thursday: {
     meals: [
-      {
-        type: 'Breakfast',
-        name: 'Oatmeal: rolled oats, oat milk, banana, sunflower seed butter, chia seeds, cinnamon',
-        calories: 580,
-        ingredients: ['1 cup rolled oats', '1 cup oat milk', '1 banana (sliced)', '2 tbsp sunflower seed butter', '1 tbsp chia seeds', '½ tsp cinnamon', '1 tbsp maple syrup'],
-        principles: ['fats', 'hydrating', 'glow']
-      },
-      {
-        type: 'Lunch',
-        name: 'Cobb salad: grilled chicken, hard-boiled egg, avocado, bacon, blue cheese, olive oil vinaigrette',
-        calories: 620,
-        ingredients: ['4 oz grilled chicken', '2 hard-boiled eggs', '½ avocado', '2 strips bacon (crumbled)', '1.5 oz blue cheese', '3 cups romaine lettuce', '2 tbsp olive oil vinaigrette', 'cherry tomatoes'],
-        principles: ['protein', 'fats']
-      },
+      BREAKFAST,
+      LUNCH,
       {
         type: 'Dinner',
         name: 'Grilled lamb chops + roasted root vegetables (carrots, beets, parsnips) with olive oil + couscous',
@@ -941,23 +914,11 @@ const MEAL_PLAN = {
   },
   Friday: {
     meals: [
-      {
-        type: 'Breakfast',
-        name: 'Smoked salmon bagel: whole grain bagel, dairy-free cream cheese, capers, red onion, cucumber',
-        calories: 600,
-        ingredients: ['1 whole grain bagel', '2 tbsp dairy-free cream cheese', '3 oz smoked salmon', '1 tbsp capers', '¼ red onion (thinly sliced)', '½ cucumber (sliced)', 'fresh dill', 'lemon'],
-        principles: ['protein', 'fats', 'glow']
-      },
-      {
-        type: 'Lunch',
-        name: 'Quinoa Buddha bowl: roasted chickpeas, avocado, sweet potato, kale, tahini dressing',
-        calories: 580,
-        ingredients: ['¾ cup cooked quinoa', '½ cup roasted chickpeas', '½ avocado', '½ sweet potato (roasted)', '2 cups kale (massaged)', '2 tbsp tahini dressing', 'lemon juice', 'olive oil'],
-        principles: ['fats', 'protein', 'glow']
-      },
+      BREAKFAST,
+      LUNCH,
       {
         type: 'Dinner',
-        name: 'Pan-seared scallops over creamy polenta (oat milk) + sautéed spinach with garlic',
+        name: 'Pan-seared scallops over creamy polenta (made with oat milk) + sautéed spinach with garlic',
         calories: 680,
         ingredients: ['6 oz sea scallops', '¾ cup polenta', '1 cup oat milk', '2 cups spinach', '3 garlic cloves', '2 tbsp butter', 'olive oil', 'white wine', 'lemon', 'fresh thyme'],
         principles: ['protein', 'fats', 'glow']
@@ -970,24 +931,12 @@ const MEAL_PLAN = {
         principles: ['fats', 'glow']
       }
     ],
-    target: 2280
+    target: 2300
   },
   Saturday: {
     meals: [
-      {
-        type: 'Breakfast',
-        name: 'Breakfast burrito: scrambled eggs, black beans, avocado, cheese, salsa in whole wheat tortilla',
-        calories: 640,
-        ingredients: ['1 large whole wheat tortilla', '3 eggs (scrambled)', '¼ cup black beans', '½ avocado', '1.5 oz cheddar cheese', '2 tbsp salsa', 'olive oil', 'cumin', 'cilantro'],
-        principles: ['protein', 'fats']
-      },
-      {
-        type: 'Lunch',
-        name: 'Caprese salad: fresh mozzarella, tomatoes, basil, balsamic, olive oil + crusty bread',
-        calories: 560,
-        ingredients: ['4 oz fresh mozzarella', '2 large tomatoes (sliced)', 'fresh basil (large handful)', '2 tbsp olive oil', '1 tbsp balsamic glaze', '2 slices crusty sourdough', 'flaky sea salt'],
-        principles: ['fats', 'hydrating', 'glow']
-      },
+      BREAKFAST,
+      LUNCH,
       {
         type: 'Dinner',
         name: 'Roasted chicken thighs with crispy skin + mashed sweet potatoes with butter + roasted broccoli',
@@ -1007,20 +956,8 @@ const MEAL_PLAN = {
   },
   Sunday: {
     meals: [
-      {
-        type: 'Breakfast',
-        name: 'French toast: brioche, eggs, cinnamon, topped with coconut yogurt, berries, maple syrup, pumpkin seeds',
-        calories: 620,
-        ingredients: ['2 slices brioche', '2 eggs', '¼ cup oat milk', '½ tsp cinnamon', '¼ cup coconut yogurt', '½ cup mixed berries', '2 tbsp maple syrup', '2 tbsp pumpkin seeds', 'butter for pan'],
-        principles: ['protein', 'fats', 'hydrating']
-      },
-      {
-        type: 'Lunch',
-        name: 'Nicoise salad: seared tuna, green beans, boiled egg, olives, tomatoes, new potatoes, olive oil',
-        calories: 600,
-        ingredients: ['5 oz seared tuna steak', '1 cup green beans (blanched)', '2 hard-boiled eggs', '¼ cup niçoise olives', 'cherry tomatoes (½ cup)', '6 new potatoes (boiled)', '3 tbsp olive oil', 'Dijon mustard', 'lemon juice'],
-        principles: ['protein', 'fats', 'hydrating', 'glow']
-      },
+      BREAKFAST,
+      LUNCH,
       {
         type: 'Dinner',
         name: 'Grass-fed steak + loaded baked potato (butter, dairy-free sour cream, chives) + asparagus with lemon butter',
@@ -1030,13 +967,13 @@ const MEAL_PLAN = {
       },
       {
         type: 'Snack',
-        name: 'Smoothie: banana, spinach, sunflower seed butter, dairy-free protein powder, oat milk, honey',
+        name: 'Smoothie: banana, spinach, sunflower seed butter, protein powder (dairy-free), oat milk, honey',
         calories: 400,
         ingredients: ['1 banana', '2 cups spinach', '2 tbsp sunflower seed butter', '1 scoop dairy-free protein powder', '1 cup oat milk', '1 tbsp honey', 'ice cubes'],
         principles: ['protein', 'fats', 'hydrating', 'glow']
       }
     ],
-    target: 2360
+    target: 2340
   }
 };
 
